@@ -1,7 +1,7 @@
 pipeline {
 
   environment {
-    dockerimagename = "bravinwasike/react-app"
+    dockerimagename = "pkonopacki/react-app"
     dockerImage = ""
   }
 
@@ -11,14 +11,14 @@ pipeline {
 
     stage('Checkout Source') {
       steps {
-        git 'https://github.com/Bravinsimiyu/jenkins-kubernetes-deployment.git'
+        git 'https://github.com/pkonopacki/jenkins-kubernetes-deployment.git'
       }
     }
 
     stage('Build image') {
       steps{
         script {
-          dockerImage = docker.build my-docker-attempt-react
+          dockerImage = docker.build dockerimagename
         }
       }
     }
