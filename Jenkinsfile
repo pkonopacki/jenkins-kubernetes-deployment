@@ -5,7 +5,7 @@ def imageId = "use-name/image-name:1.$BUILD_NUMBER"
 pipeline {
 
     agent {
-        label 'docker'  # separate agent (launched as JAR on host machine) to avoid running docker inside docker
+        label 'docker' 
     }
     stages {
         stage('Test') {
