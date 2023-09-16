@@ -1,9 +1,8 @@
 pipeline {
 
   environment {
-    def dockerHome = tool "myDocker"
-    env.PATH = "${dockerHome}/bin:${env.PATH}"
-
+    dockerHome = tool "myDocker"
+    env.PATH = "dockerHome/bin:${env.PATH}"
     dockerimagename = "pkonopacki/react-app"
     dockerImage = ""
   }
