@@ -4,9 +4,8 @@ def imageId = "use-name/image-name:1.$BUILD_NUMBER"
 
 pipeline {
 
-    agent {
-        label 'docker' 
-    }
+agent any
+
     stages {
         stage('Test') {
             steps {
