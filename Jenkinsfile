@@ -1,8 +1,8 @@
 pipeline {
 
   environment {
-    dockerHome = tool "myDocker"
-    env.PATH = "dockerHome/bin:${env.PATH}"
+    // dockerHome = tool "myDocker"
+    // env.PATH = "dockerHome/bin:${env.PATH}"
     dockerimagename = "pkonopacki/react-app"
     dockerImage = ""
   }
@@ -19,9 +19,7 @@ pipeline {
 
     stage('Build image') {
       steps{
-        script {
-          dockerImage = docker build -t dockerimagename .
-        }
+          sh docker build -t dockerimagename .
       }
     }
 
