@@ -1,19 +1,55 @@
 pipeline {
-    agent none
-    stages {
-        stage('Example Build') {
-            agent { docker 'maven:3.9.3-eclipse-temurin-17' }
-            steps {
-                echo 'Hello, Maven'
-                sh 'mvn --version'
-            }
-        }
-        stage('Example Test') {
-            agent { docker 'openjdk:17-jre' }
-            steps {
-                echo 'Hello, JDK'
-                sh 'java -version'
-            }
-        }
+
+  environment {
+    DOCKERHUB_CREDENTIALS = credentials('dockerhub-credentials')
+    dockerImage = ""
+  }
+
+  agent any
+
+  stages {
+
+    // stage('Checkout Source') {
+    //   steps {
+    //     git 'https://github.com/Bravinsimiyu/jenkins-kubernetes-deployment.git'
+    //   }
+    // }
+
+    stage('Build image') {
+      steps{
+          sh 'docker build -t pkonopacki/react-app .' 
+      }
     }
+
+    stage('Login') {
+      steps{
+          sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'  
+      }
+    }
+
+    stage('Push') {
+      steps{
+        sh 'docker push pkonopacki/react-app:latest'
+
+        //   docker.withRegistry( 'https://registry.hub.docker.com', registryCredential ) 
+        //     dockerImage.push("latest")        
+      }
+    }
+
+    // stage('Deploying React.js container to Kubernetes') {
+    //   steps {
+    //     script {
+    //       kubernetesDeploy(configs: "deployment.yaml", "service.yaml")
+    //     }
+    //   }
+    // }
+
+  }
+
+  post {
+    always {
+        sh 'docker logout'
+    }
+  }  
+
 }
