@@ -1,47 +1,19 @@
-#!/usr/bin/env groovy
-
-def imageId = "use-name/image-name:1.$BUILD_NUMBER"
-
 pipeline {
-
-agent any
-
+    agent none
     stages {
-        stage('Test') {
+        stage('Example Build') {
+            agent { docker 'maven:3.9.3-eclipse-temurin-17' }
             steps {
-                script {
-                    sh "docker build --no-cache --target test -t ${imageId} ."
-                }
+                echo 'Hello, Maven'
+                sh 'mvn --version'
             }
         }
-        stage('Build') {
+        stage('Example Test') {
+            agent { docker 'openjdk:17-jre' }
             steps {
-                script {
-                    sh "docker build --target build -t ${imageId} ."
-                }
+                echo 'Hello, JDK'
+                sh 'java -version'
             }
-        }
-        stage('Image') {
-            steps {
-                script {
-                    sh "docker build --target final -t ${imageId} ."
-                }
-            }
-        }
-        stage('Deploy') {
-            steps {
-                script {
-                    docker.withRegistry('' , 'dockerhub') {
-                        dockerImage = docker.build("${imageId}")
-                        dockerImage.push()
-                    }
-                }
-            }
-        }
-        stage('Clean') {
-          steps{
-            sh "docker rmi ${imageId}"
-          }
         }
     }
 }
