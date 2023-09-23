@@ -1,13 +1,13 @@
 pipeline {
 
-  environment {
-    DOCKERHUB_CREDENTIALS = credentials('dockerhub-credentials')
-    dockerImage = ""
-  }
+  // environment {
+  //   DOCKERHUB_CREDENTIALS = credentials('dockerhub-credentials')
+  //   dockerImage = ""
+  // }
 
   agent {
     docker {
-      image 'maven:3.9.3-eclipse-temurin-17'
+      label 'docker-agent-eclipse'
       args '-v $HOME/.m2:/root/.m2'
     }
   }
