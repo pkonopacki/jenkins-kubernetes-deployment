@@ -5,7 +5,12 @@ pipeline {
     dockerImage = ""
   }
 
-  agent any
+  agent {
+    docker {
+      image 'maven:3.9.3-eclipse-temurin-17'
+      args '-v $HOME/.m2:/root/.m2'
+    }
+  }
 
   stages {
 
@@ -16,6 +21,7 @@ pipeline {
     // }
 
     stage('Build image') {
+
       steps{
           sh 'docker build -t pkonopacki/react-app .' 
       }
