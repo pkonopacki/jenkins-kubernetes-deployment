@@ -6,9 +6,9 @@ pipeline {
   // }
 
   agent {
-    node {
-      label 'docker-agent-eclipse'
+    docker {
       image 'maven:3.9.3-eclipse-temurin-17'
+      label 'docker-agent-eclipse'
       args '-v $HOME/.m2:/root/.m2'
     }
   }
