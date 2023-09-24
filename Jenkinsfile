@@ -6,7 +6,7 @@ pipeline {
   // }
 
   agent {
-    docker {
+    node {
       label 'docker-agent-eclipse'
       args '-v $HOME/.m2:/root/.m2'
     }
