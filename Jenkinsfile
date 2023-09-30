@@ -8,8 +8,8 @@ pipeline {
   agent {
     docker {
       image 'pkonopacki/alpine-agent:latest'
-      label 'docker-agent-alpine'
-      args '--prileged -v $HOME/.m2:/root/.m2'
+      //label 'docker-agent-alpine'
+      args '-u 0 -v $HOME/.m2:/root/.m2'
     }
   }
 
