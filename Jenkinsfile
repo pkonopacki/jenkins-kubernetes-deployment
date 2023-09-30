@@ -8,7 +8,7 @@ pipeline {
   agent {
     docker {
       image 'pkonopacki/alpine-agent:latest'
-      //label 'docker-agent-eclipse'
+      label 'docker-agent-alpine'
       args '-v $HOME/.m2:/root/.m2'
     }
   }
